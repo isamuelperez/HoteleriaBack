@@ -9,7 +9,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HoteleriaBack.Infrastructure.Base
+namespace HoteleriaBack.Infrastructure.DataBase
 {
     public class TravelContext : DbContext
     {

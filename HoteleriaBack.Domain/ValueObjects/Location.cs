@@ -11,5 +11,18 @@ namespace HoteleriaBack.Domain.ValueObjects
     {
         public string City { get; private set; }
         public string Address { get; private set; }
+
+        public Location(string city, string address)
+        {
+            if(string.IsNullOrEmpty(city)) throw new Exception("La ciudad no puede ser vacía o nula.");
+            if (string.IsNullOrEmpty(address)) throw new Exception("La dirección no puede ser vacía o nula.");
+
+            Address = address;
+            City = city;
+        }
+        public Location()
+        {
+            
+        }
     }
 }
