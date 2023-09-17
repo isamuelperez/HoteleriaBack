@@ -9,6 +9,5 @@ namespace HoteleriaBack.Domain.Contracts
     public abstract class Entity
     {
         public virtual long Id { get; private set; }
-        public virtual string Name { get; private set; }
     }
 }
