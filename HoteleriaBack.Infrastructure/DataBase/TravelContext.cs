@@ -33,9 +33,9 @@ namespace HoteleriaBack.Infrastructure.DataBase
             modelBuilder.Entity<Hotel>().HasKey(x => x.Id);
             modelBuilder.Entity<Hotel>().HasOne(x => x.User);
             modelBuilder.Entity<Hotel>().HasOne(x => x.Location);
+            modelBuilder.Entity<Hotel>().HasMany(x => x.Rooms);
 
             modelBuilder.Entity<Room>().HasKey(x => x.Id);
-            modelBuilder.Entity<Room>().HasOne(x => x.Hotel);
 
             modelBuilder.Entity<Reservation>().HasKey(x => x.Id);
             modelBuilder.Entity<Reservation>().HasOne(x => x.Client);

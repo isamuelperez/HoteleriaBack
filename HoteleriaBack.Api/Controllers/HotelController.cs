@@ -1,4 +1,5 @@
 ﻿using HoteleriaBack.Application.Hotels.Create;
+using HoteleriaBack.Application.Hotels.GetAll;
 using HoteleriaBack.Domain.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +25,12 @@ namespace HoteleriaBack.Api.Controllers
         }
 
         [HttpGet("getAll")]
-
         public ActionResult GetAll()
         {
-            
+            var response = new GetAllQuery(_unitOfWork).Handle();
+            if (response.Status == 200)
+                return Ok(response);
+            return BadRequest(response);
         }
     }
 }

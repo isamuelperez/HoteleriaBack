@@ -10,7 +10,6 @@ namespace HoteleriaBack.Domain.Entities
 {
     public class Room : Entity
     {
-        public Hotel Hotel { get; private set; }
         public string Name { get; private set; }
         public decimal BaseCost { get; private set; }
         public decimal Duty { get; private set; }

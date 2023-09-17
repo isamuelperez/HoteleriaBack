@@ -16,6 +16,7 @@ namespace HoteleriaBack.Domain.Entities
         public string Image { get; private set; }
         public bool Enabled { get; private set; }
         public Location Location { get; private set; }
+        public List<Room> Rooms { get; private set; }
         public Hotel(HotelDTO dto)
         {
             var response = createValidate(dto);
@@ -26,10 +27,12 @@ namespace HoteleriaBack.Domain.Entities
             Image = dto.Image;
             Location = dto.Location;
             Enabled = dto.Enabled;
+
+            Rooms = new List<Room>();
         }
         public Hotel()
         {
-            
+            Rooms = new List<Room>();
         }
         private string createValidate(HotelDTO dto)
         {

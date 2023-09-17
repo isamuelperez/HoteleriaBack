@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HoteleriaBack.Application.Shared
 {
-    public class MapType
+    public static class MapType
     {
 
-        public string MapRoomType(RoomType type) => type switch
+        public static string MapRoomType(RoomType type) => type switch
         {
             RoomType.Individual => "Individual",
             RoomType.Twin => "Doble",
