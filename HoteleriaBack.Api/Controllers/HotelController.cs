@@ -22,5 +22,12 @@ namespace HoteleriaBack.Api.Controllers
                 return Ok(response);
             return BadRequest(response);
         }
+
+        [HttpGet("getAll")]
+
+        public ActionResult GetAll()
+        {
+            
+        }
     }
 }
