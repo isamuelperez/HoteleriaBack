@@ -15,14 +15,16 @@ namespace HoteleriaBack.Application.Hotels.GetAll
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        public GetAllQuery(IUnitOfWork unitOfWork)
+        private readonly IAuthenticationService _authenticationService;
+        public GetAllQuery(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
+            _authenticationService = authenticationService;
         }
 
         public Response<List<GetAllResponse>> Handle()
         {
-            long userId = 1;
+            long userId = 1;//_authenticationService.GetIdUser();
 
             if (userId <= 0) return new Response<List<GetAllResponse>>("El usuario no esta utenticado.", 500);
 

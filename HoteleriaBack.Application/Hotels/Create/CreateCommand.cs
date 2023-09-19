@@ -14,9 +14,11 @@ namespace HoteleriaBack.Application.Hotels.Create
     public class CreateCommand
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CreateCommand(IUnitOfWork unitOfWork)
+        private readonly IAuthenticationService _authenticationService;
+        public CreateCommand(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
+            _authenticationService = authenticationService;
         }
 
         public Response<bool> Handle(CreateRequest request)
@@ -25,7 +27,7 @@ namespace HoteleriaBack.Application.Hotels.Create
 
             if (request is null) return new Response<bool>("La solicitud no puede ser nula.", 400);
 
-            long userId = 1;
+            long userId = 1;//_authenticationService.GetIdUser();
 
             if(userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
 
