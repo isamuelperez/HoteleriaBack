@@ -10,4 +10,8 @@
     <ProjectReference Include="..\HoteleriaBack.Domain\HoteleriaBack.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authntication\" />
+  </ItemGroup>
+
 </Project>
