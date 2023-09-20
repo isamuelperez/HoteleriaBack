@@ -1,4 +1,5 @@
-﻿using HoteleriaBack.Application.Shared;
+﻿using HoteleriaBack.Application.Hotels.Create;
+using HoteleriaBack.Application.Shared;
 using HoteleriaBack.Domain.Contracts;
 using HoteleriaBack.Domain.Entities;
 using HoteleriaBack.Domain.Enums;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HoteleriaBack.Application.Hotels.Create
+namespace HoteleriaBack.Application.Rooms.Create
 {
     public class CreateCommand
     {
@@ -21,7 +22,7 @@ namespace HoteleriaBack.Application.Hotels.Create
             _authenticationService = authenticationService;
         }
 
-        public Response<bool> Handle(CreateRequest request)
+        public Response<bool> Handle(CreateRequestRoom request)
         {
             _unitOfWork.BeginTransaction();
 
@@ -29,45 +30,47 @@ namespace HoteleriaBack.Application.Hotels.Create
 
             long userId = 1;// _authenticationService.GetIdUser();
 
-            if(userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
+            if (userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
 
             var user = _unitOfWork.GenericRepository<User>().Find(userId);
 
-            if(user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
+            if (user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
 
-            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para crear un hotel.", 400);
+            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para crear una habitacióm.", 400);
 
             try
             {
                 var dto = Map(request);
-                dto.User = user;
-                dto.Location = new Location(request.City, request.Address);
 
-                var hotel = new Hotel(dto);
+                var room = new Room(dto);
 
-                _unitOfWork.GenericRepository<Hotel>().Add(hotel);
+                _unitOfWork.GenericRepository<Room>().Add(room);
                 _unitOfWork.Commit();
 
-                return new Response<bool>("Se creó correctamente el hotel.",200);
+                return new Response<bool>("Se creó correctamente la habitación.",200);
 
             }
             catch (Exception e)
             {
-
                 _unitOfWork.Rollback();
-                return new Response<bool>( e.Message, 500);
+                return new Response<bool>(e.Message, 500);
             }
-            
 
         }
 
-        private HotelDTO Map(CreateRequest request)
+        private RoomDto Map(CreateRequestRoom request)
         {
-            var dto = new HotelDTO();
+            var dto = new RoomDto();
             dto.Name = request.Name;
-            dto.Image = request.Image;
             dto.Enabled = request.Enabled;
+            dto.Location = request.Location;
+            dto.Type = request.Type;
+            dto.Duty = request.Duty;
+            dto.BaseCost = request.BaseCost;
+            dto.MaxCount = request.MaxCount;
             return dto;
         }
     }
+
+
 }

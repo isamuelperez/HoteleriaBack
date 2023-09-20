@@ -11,6 +11,7 @@ namespace HoteleriaBack.Application.Hotels.GetAll
 {
     public class GetAllResponse
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public bool Enabled { get; set; }
@@ -22,6 +23,7 @@ namespace HoteleriaBack.Application.Hotels.GetAll
 
     public class RoomResponse
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public decimal BaseCost { get; set; }
         public decimal Duty { get; set; }

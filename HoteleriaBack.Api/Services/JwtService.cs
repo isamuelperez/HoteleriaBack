@@ -19,7 +19,7 @@ namespace HoteleriaBack.Api.Services
         public string GetToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKey);
+            var key = Encoding.UTF8.GetBytes(_appSettings.SecretKey);
             var tokenDescritor = new SecurityTokenDescriptor
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(

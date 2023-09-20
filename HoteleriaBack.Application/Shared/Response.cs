@@ -17,10 +17,17 @@ namespace HoteleriaBack.Application.Shared
             Message = message;
             Status = status;
         }
-        public Response(string message)
+        public Response(string message, List<Domain.Entities.Room> rooms)
         {
             Message = message;
             Status = 200;
+        }
+
+        public Response(string message, List<Domain.Entities.Room> rooms, T data)
+        {
+            Message = message;
+            Status = 200;
+            Data = data;
         }
         public Response(string message, T data)
         {

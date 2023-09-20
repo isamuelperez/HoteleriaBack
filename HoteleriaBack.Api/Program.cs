@@ -24,7 +24,7 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 
 #region Jwt
 var appSettings = appSettingsSection.Get<AppSettings>();
-var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
+var key = Encoding.UTF8.GetBytes(appSettings.SecretKey);
 
 builder.Services.AddAuthentication(x =>
 {
@@ -82,6 +82,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors(MyAllowSpecificOrigins);

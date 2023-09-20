@@ -1,4 +1,5 @@
-﻿using HoteleriaBack.Application.Shared;
+﻿using HoteleriaBack.Application.Hotels.Create;
+using HoteleriaBack.Application.Shared;
 using HoteleriaBack.Domain.Contracts;
 using HoteleriaBack.Domain.Entities;
 using HoteleriaBack.Domain.Enums;
@@ -9,19 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HoteleriaBack.Application.Hotels.Create
+namespace HoteleriaBack.Application.Hotels.Update
 {
-    public class CreateCommand
+    public class UpdateCommand
     {
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticationService _authenticationService;
-        public CreateCommand(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
+        public UpdateCommand(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
 
-        public Response<bool> Handle(CreateRequest request)
+        public Response<bool> Handle(UpdateRequest request)
         {
             _unitOfWork.BeginTransaction();
 
@@ -29,13 +31,13 @@ namespace HoteleriaBack.Application.Hotels.Create
 
             long userId = 1;// _authenticationService.GetIdUser();
 
-            if(userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
+            if (userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
 
             var user = _unitOfWork.GenericRepository<User>().Find(userId);
 
-            if(user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
+            if (user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
 
-            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para crear un hotel.", 400);
+            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para modificar un hotel.", 400);
 
             try
             {
@@ -45,23 +47,23 @@ namespace HoteleriaBack.Application.Hotels.Create
 
                 var hotel = new Hotel(dto);
 
-                _unitOfWork.GenericRepository<Hotel>().Add(hotel);
+                _unitOfWork.GenericRepository<Hotel>().Update(hotel);
                 _unitOfWork.Commit();
 
-                return new Response<bool>("Se creó correctamente el hotel.",200);
+                return new Response<bool>("Se modifico correctamente el hotel.", 200);
 
             }
             catch (Exception e)
             {
 
                 _unitOfWork.Rollback();
-                return new Response<bool>( e.Message, 500);
+                return new Response<bool>(e.Message, 500);
             }
-            
+
 
         }
 
-        private HotelDTO Map(CreateRequest request)
+        private HotelDTO Map(UpdateRequest request)
         {
             var dto = new HotelDTO();
             dto.Name = request.Name;

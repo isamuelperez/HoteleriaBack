@@ -17,6 +17,32 @@ namespace HoteleriaBack.Domain.Entities
         public string Location { get; private set; }
         public bool Enabled { get; private set; }
         public int MaxCount { get; private set; }
-        public Room() { }
+        public Room()
+        {
+                
+        }
+
+        public Room(RoomDto dto) {
+
+            Name = dto.Name;
+            BaseCost = dto.BaseCost;
+            Duty = dto.Duty;
+            Type = dto.Type;
+            Location = dto.Location;
+            Enabled = dto.Enabled;
+            MaxCount = dto.MaxCount;
+
+        }
+    }
+
+    public class RoomDto
+    {
+        public string Name { get; set; }
+        public decimal BaseCost { get; set; }
+        public decimal Duty { get; set; }
+        public RoomType Type { get; set; }
+        public string Location { get; set; }
+        public bool Enabled { get; set; }
+        public int MaxCount { get; set; }
     }
 }

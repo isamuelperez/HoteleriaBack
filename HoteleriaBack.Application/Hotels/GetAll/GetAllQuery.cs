@@ -59,6 +59,7 @@ namespace HoteleriaBack.Application.Hotels.GetAll
         private GetAllResponse MapHotel(Hotel hotel)
         {
             var response = new GetAllResponse();
+            response.Id = hotel.Id;
             response.Name = hotel.Name;
             response.Image = hotel.Image;
             response.Enabled = hotel.Enabled;
@@ -70,6 +71,7 @@ namespace HoteleriaBack.Application.Hotels.GetAll
         private RoomResponse MapRoom(Room room)
         {
             var response = new RoomResponse();
+            response.Id = room.Id;
             response.Name = room.Name;
             response.BaseCost = room.BaseCost;
             response.Duty = room.Duty;

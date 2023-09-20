@@ -49,6 +49,7 @@ namespace HoteleriaBack.Domain.Entities
     }
     public class HotelDTO
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public User User { get; set; }
         public string Image { get; set; }
