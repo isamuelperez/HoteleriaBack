@@ -1,16 +1,15 @@
-﻿using HoteleriaBack.Domain.Entities;
-using HoteleriaBack.Domain.Enums;
+﻿using HoteleriaBack.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HoteleriaBack.Application.Rooms.Create
+namespace HoteleriaBack.Application.Rooms.Update
 {
-    public class CreateRequestRoom
+    public class UpdateRoomRequest
     {
-        public Hotel Hotel { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public decimal BaseCost { get; set; }
         public decimal Duty { get; set; }

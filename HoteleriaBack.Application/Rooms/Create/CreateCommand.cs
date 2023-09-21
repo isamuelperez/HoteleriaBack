@@ -61,6 +61,7 @@ namespace HoteleriaBack.Application.Rooms.Create
         private RoomDto Map(CreateRequestRoom request)
         {
             var dto = new RoomDto();
+            dto.Hotel = request.Hotel;
             dto.Name = request.Name;
             dto.Enabled = request.Enabled;
             dto.Location = request.Location;

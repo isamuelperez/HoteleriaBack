@@ -1,5 +1,6 @@
 ﻿using HoteleriaBack.Application.Rooms.Create;
 using HoteleriaBack.Application.Rooms.GetAll;
+using HoteleriaBack.Application.Rooms.Update;
 using HoteleriaBack.Domain.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,15 @@ namespace HoteleriaBack.Api.Controllers
         public ActionResult Create(CreateRequestRoom request)
         {
             var response = new CreateCommand(_unitOfWork, _authenticationService).Handle(request);
+            if (response.Status == 200)
+                return Ok(response);
+            return BadRequest(response);
+        }
+        //[Authorize]
+        [HttpPost("update")]
+        public ActionResult Update(UpdateRoomRequest request)
+        {
+            var response = new UpdateRoomCommand(_unitOfWork, _authenticationService).Handle(request);
             if (response.Status == 200)
                 return Ok(response);
             return BadRequest(response);

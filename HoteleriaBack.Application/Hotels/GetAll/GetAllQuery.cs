@@ -36,16 +36,33 @@ namespace HoteleriaBack.Application.Hotels.GetAll
                 var hotels = new List<Hotel>();
                 if (user.Type == UserType.Agency)
                 {
-                    hotels = _unitOfWork.GenericRepository<Hotel>().FindBy(x => x.User.Id == userId, includeProperties: "Location,Rooms").ToList();
+                    hotels = _unitOfWork.GenericRepository<Hotel>().FindBy(x => 
+                    x.User.Id == userId, includeProperties: "Location").ToList();
                 }
                 else
                 {
-                    hotels = _unitOfWork.GenericRepository<Hotel>().FindBy(includeProperties: "Location,Rooms").ToList();
+                    hotels = _unitOfWork.GenericRepository<Hotel>().FindBy(includeProperties: "Location").ToList();
                 }
 
                 if (!hotels.Any()) return new Response<List<GetAllResponse>>("No tiene hoteles por mostrar.", 400);
 
-                var getAll = hotels.Select(x => MapHotel(x)).ToList();
+                var getAll = new List<GetAllResponse>();
+                hotels.ForEach(x =>
+                {
+                    var r = MapHotel(x);
+                    var rooms = _unitOfWork.GenericRepository<Room>().FindBy(y=> y.Hotel.Id == x.Id).ToList();
+
+                    if (rooms.Any())
+                    {
+                        r.Rooms= rooms.Select(z=> MapRoom(z)).ToList();
+                    }
+                    else
+                    {
+                        r.Rooms = new List<RoomResponse>();
+                    }
+                    getAll.Add(r);
+                });
+
                 return new Response<List<GetAllResponse>>("Se consultó correctamente.", getAll);
             }
             catch (Exception)
@@ -64,7 +81,6 @@ namespace HoteleriaBack.Application.Hotels.GetAll
             response.Image = hotel.Image;
             response.Enabled = hotel.Enabled;
             response.Location = hotel.Location;
-            response.Rooms = hotel.Rooms.Select(x => MapRoom(x)).ToList();
             return response;
             
         }

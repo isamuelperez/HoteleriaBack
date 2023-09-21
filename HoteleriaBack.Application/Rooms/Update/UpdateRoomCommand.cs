@@ -1,29 +1,27 @@
-﻿using HoteleriaBack.Application.Hotels.Create;
+﻿using HoteleriaBack.Application.Rooms.Create;
 using HoteleriaBack.Application.Shared;
 using HoteleriaBack.Domain.Contracts;
 using HoteleriaBack.Domain.Entities;
 using HoteleriaBack.Domain.Enums;
-using HoteleriaBack.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HoteleriaBack.Application.Hotels.Update
+namespace HoteleriaBack.Application.Rooms.Update
 {
-    public class UpdateCommand
+    public class UpdateRoomCommand
     {
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticationService _authenticationService;
-        public UpdateCommand(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
+        public UpdateRoomCommand(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
 
-        public Response<bool> Handle(UpdateRequest request)
+        public Response<bool> Handle(UpdateRoomRequest request)
         {
             _unitOfWork.BeginTransaction();
 
@@ -37,38 +35,39 @@ namespace HoteleriaBack.Application.Hotels.Update
 
             if (user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
 
-            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para modificar un hotel.", 400);
+            if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para crear una habitacióm.", 400);
 
             try
             {
+                var roomSelect = _unitOfWork.GenericRepository<Room>().Find(request.Id);
                 var dto = Map(request);
-                dto.User = user;
-                dto.Location = new Location(request.City, request.Address);
-                var selectHotel = _unitOfWork.GenericRepository<Hotel>().Find(request.Id);
 
-                selectHotel.Update(dto);
+                roomSelect.Update(dto);
 
-                _unitOfWork.GenericRepository<Hotel>().Update(selectHotel);
+                _unitOfWork.GenericRepository<Room>().Update(roomSelect);
                 _unitOfWork.Commit();
 
-                return new Response<bool>("Se modifico correctamente el hotel.", 200);
+                return new Response<bool>("Se modifico la habitación.", 200);
 
             }
             catch (Exception e)
             {
-
                 _unitOfWork.Rollback();
                 return new Response<bool>(e.Message, 500);
             }
 
         }
 
-        private HotelDTO Map(UpdateRequest request)
+        private RoomDto Map(UpdateRoomRequest request)
         {
-            var dto = new HotelDTO();
+            var dto = new RoomDto();
             dto.Name = request.Name;
-            dto.Image = request.Image;
             dto.Enabled = request.Enabled;
+            dto.Location = request.Location;
+            dto.Type = request.Type;
+            dto.Duty = request.Duty;
+            dto.BaseCost = request.BaseCost;
+            dto.MaxCount = request.MaxCount;
             return dto;
         }
     }
