@@ -10,6 +10,7 @@ namespace HoteleriaBack.Application.Rooms.Update
     public class UpdateRoomRequest
     {
         public long Id { get; set; }
+        public long HotelId { get; set; }
         public string Name { get; set; }
         public decimal BaseCost { get; set; }
         public decimal Duty { get; set; }

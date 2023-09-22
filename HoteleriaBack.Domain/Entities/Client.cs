@@ -18,5 +18,33 @@ namespace HoteleriaBack.Domain.Entities
         public string Email { get; private set; }
         public string Phone { get; private set; }
         public string BirthDate { get; private set; }
+        public Client(ClientDto dto)
+        {
+            Name = dto.Name;
+            Email = dto.Email;
+            Phone = dto.Phone;
+            BirthDate = dto.BirthDate;
+            Gender = dto.Gender;
+            NumberDocument = dto.NumberDocument;
+            DocumentType = dto.DocumentType;
+            Surname = dto.Surname;
+        }
+        public Client()
+        {
+            
+        }
     }
+
+    public class ClientDto
+    {
+        public DocumentType DocumentType { get; set; }
+        public string NumberDocument { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public Gender Gender { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string BirthDate { get; set; }
+    }
+
 }

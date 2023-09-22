@@ -25,7 +25,7 @@ namespace HoteleriaBack.Domain.Entities
 
         public Room(RoomDto dto)
         {
-
+            Hotel = dto.Hotel;
             Name = dto.Name;
             BaseCost = dto.BaseCost;
             Duty = dto.Duty;

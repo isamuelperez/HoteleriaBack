@@ -1,4 +1,5 @@
-﻿using HoteleriaBack.Domain.Enums;
+﻿using HoteleriaBack.Domain.Entities;
+using HoteleriaBack.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace HoteleriaBack.Application.Rooms.GetAll
     {
 
         public long Id { get; set; }
-        public long HotelId { get; set; }
+        public HotelResponseDto Hotel { get; set; }
         public string Name { get; set; }
         public decimal BaseCost { get; set; }
         public decimal Duty { get; set; }

@@ -10,7 +10,7 @@ namespace HoteleriaBack.Application.Rooms.Create
 {
     public class CreateRequestRoom
     {
-        public Hotel Hotel { get; set; }
+        public long HotelId { get; set; }
         public string Name { get; set; }
         public decimal BaseCost { get; set; }
         public decimal Duty { get; set; }

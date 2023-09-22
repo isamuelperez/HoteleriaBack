@@ -40,7 +40,8 @@ namespace HoteleriaBack.Application.Rooms.Create
 
             try
             {
-                var dto = Map(request);
+                var HotelSelect = _unitOfWork.GenericRepository<Hotel>().Find(request.HotelId);
+                var dto = Map(request, HotelSelect);
 
                 var room = new Room(dto);
 
@@ -58,10 +59,10 @@ namespace HoteleriaBack.Application.Rooms.Create
 
         }
 
-        private RoomDto Map(CreateRequestRoom request)
+        private RoomDto Map(CreateRequestRoom request, Hotel hotel)
         {
             var dto = new RoomDto();
-            dto.Hotel = request.Hotel;
+            dto.Hotel = hotel;
             dto.Name = request.Name;
             dto.Enabled = request.Enabled;
             dto.Location = request.Location;

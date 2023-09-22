@@ -3,6 +3,7 @@ using System;
 using HoteleriaBack.Infrastructure.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HoteleriaBack.Infrastructure.Migrations
 {
     [DbContext(typeof(TravelContext))]
-    partial class TravelContextModelSnapshot : ModelSnapshot
+    [Migration("20230921161135_travel10")]
+    partial class travel10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,14 +139,14 @@ namespace HoteleriaBack.Infrastructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("HotelId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("InitDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PersonCount")
                         .HasColumnType("integer");
-
-                    b.Property<long>("RoomId")
-                        .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -155,7 +157,7 @@ namespace HoteleriaBack.Infrastructure.Migrations
 
                     b.HasIndex("EmergencyContactId");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("HotelId");
 
                     b.HasIndex("UserId");
 
@@ -281,9 +283,9 @@ namespace HoteleriaBack.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HoteleriaBack.Domain.Entities.Room", "Room")
+                    b.HasOne("HoteleriaBack.Domain.Entities.Hotel", "Hotel")
                         .WithMany()
-                        .HasForeignKey("RoomId")
+                        .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -297,7 +299,7 @@ namespace HoteleriaBack.Infrastructure.Migrations
 
                     b.Navigation("EmergencyContact");
 
-                    b.Navigation("Room");
+                    b.Navigation("Hotel");
 
                     b.Navigation("User");
                 });

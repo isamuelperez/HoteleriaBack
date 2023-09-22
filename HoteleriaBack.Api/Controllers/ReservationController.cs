@@ -1,37 +1,29 @@
-﻿using HoteleriaBack.Application.Rooms.Create;
+﻿using HoteleriaBack.Application.Hotels.Create;
+using HoteleriaBack.Application.Reservations.Create;
+using HoteleriaBack.Application.Reservations.GetAll;
 using HoteleriaBack.Application.Rooms.GetAll;
-using HoteleriaBack.Application.Rooms.Update;
 using HoteleriaBack.Domain.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers
 {
-    [Route("api/Room")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class RoomController : ControllerBase
+    public class ReservationController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticationService _authenticationService;
-        public RoomController(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
+        public ReservationController(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
         {
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
         //[Authorize]
         [HttpPost("create")]
-        public ActionResult Create(CreateRequestRoom request)
+        public ActionResult Create(CreateReservationRequest request)
         {
-            var response = new CreateCommand(_unitOfWork, _authenticationService).Handle(request);
-            if (response.Status == 200)
-                return Ok(response);
-            return BadRequest(response);
-        }
-        //[Authorize]
-        [HttpPut("update")]
-        public ActionResult Update(UpdateRoomRequest request)
-        {
-            var response = new UpdateRoomCommand(_unitOfWork, _authenticationService).Handle(request);
+            var response = new CreateReservationCommand(_unitOfWork, _authenticationService).Handle(request);
             if (response.Status == 200)
                 return Ok(response);
             return BadRequest(response);
@@ -41,7 +33,7 @@ namespace HoteleriaBack.Api.Controllers
         [HttpGet("getAll")]
         public ActionResult GetAll()
         {
-            var response = new GetAllQueryRoom(_unitOfWork, _authenticationService).Handle();
+            var response = new GetAllQueryReservation(_unitOfWork, _authenticationService).Handle();
             if (response.Status == 200)
                 return Ok(response);
             return BadRequest(response);

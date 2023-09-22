@@ -39,8 +39,10 @@ namespace HoteleriaBack.Application.Rooms.Update
 
             try
             {
+                var HotelSelect = _unitOfWork.GenericRepository<Hotel>().Find(request.HotelId);
                 var roomSelect = _unitOfWork.GenericRepository<Room>().Find(request.Id);
-                var dto = Map(request);
+                
+                var dto = Map(request, HotelSelect);
 
                 roomSelect.Update(dto);
 
@@ -58,9 +60,10 @@ namespace HoteleriaBack.Application.Rooms.Update
 
         }
 
-        private RoomDto Map(UpdateRoomRequest request)
+        private RoomDto Map(UpdateRoomRequest request, Hotel hotel)
         {
             var dto = new RoomDto();
+            dto.Hotel = hotel;
             dto.Name = request.Name;
             dto.Enabled = request.Enabled;
             dto.Location = request.Location;

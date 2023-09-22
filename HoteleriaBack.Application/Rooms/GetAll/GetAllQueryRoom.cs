@@ -3,6 +3,7 @@ using HoteleriaBack.Application.Shared;
 using HoteleriaBack.Domain.Contracts;
 using HoteleriaBack.Domain.Entities;
 using HoteleriaBack.Domain.Enums;
+using HoteleriaBack.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace HoteleriaBack.Application.Rooms.GetAll
                 var rooms = new List<Room>();
                 if (user.Type == UserType.Agency)
                 {
-                    rooms = _unitOfWork.GenericRepository<Room>().GetAll().ToList();
+                    rooms = _unitOfWork.GenericRepository<Room>().FindBy(includeProperties: "Hotel").ToList();
                 }
                 else
                 {
@@ -60,6 +61,7 @@ namespace HoteleriaBack.Application.Rooms.GetAll
         private GetAllRoomResponse MapHotel(Room room)
         {
             var response = new GetAllRoomResponse();
+            response.Hotel = new HotelResponseDto(room.Hotel);
             response.Id = room.Id;
             response.Name = room.Name;
             response.Type = room.Type;
@@ -70,6 +72,23 @@ namespace HoteleriaBack.Application.Rooms.GetAll
             response.Location = room.Location;
             return response;
 
+        }
+
+    }
+
+    public class HotelResponseDto
+    {
+        public long Id { get; set; }
+        public string Name { get; set; }
+      
+
+        public HotelResponseDto(Hotel dto)
+        {
+            Id= dto.Id;
+            Name= dto.Name;
+        }
+        public HotelResponseDto()
+        {
         }
     }
 }
