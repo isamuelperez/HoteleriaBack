@@ -3,7 +3,6 @@ using HoteleriaBack.Application.Hotels.GetAll;
 using HoteleriaBack.Application.Hotels.Update;
 using HoteleriaBack.Domain.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers
@@ -14,21 +13,22 @@ namespace HoteleriaBack.Api.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthenticationService _authenticationService;
-        public HotelController(IUnitOfWork unitOfWork, IAuthenticationService authenticationService) {
+        public HotelController(IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
+        {
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost("create")]
         public ActionResult Create(CreateRequest request)
         {
             var response = new CreateCommand(_unitOfWork, _authenticationService).Handle(request);
-            if(response.Status == 200) 
+            if (response.Status == 200)
                 return Ok(response);
             return BadRequest(response);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut("update")]
         public ActionResult Update(UpdateRequest request)
         {
@@ -37,8 +37,6 @@ namespace HoteleriaBack.Api.Controllers
                 return Ok(response);
             return BadRequest(response);
         }
-
-
 
         //[Authorize]
         [HttpGet("getAll")]

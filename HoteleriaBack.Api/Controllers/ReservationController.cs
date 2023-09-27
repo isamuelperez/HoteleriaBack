@@ -1,9 +1,7 @@
-﻿using HoteleriaBack.Application.Hotels.Create;
-using HoteleriaBack.Application.Reservations.Create;
+﻿using HoteleriaBack.Application.Reservations.Create;
 using HoteleriaBack.Application.Reservations.GetAll;
-using HoteleriaBack.Application.Rooms.GetAll;
 using HoteleriaBack.Domain.Contracts;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers
@@ -19,7 +17,7 @@ namespace HoteleriaBack.Api.Controllers
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost("create")]
         public ActionResult Create(CreateReservationRequest request)
         {
@@ -29,7 +27,7 @@ namespace HoteleriaBack.Api.Controllers
             return BadRequest(response);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("getAll")]
         public ActionResult GetAll()
         {

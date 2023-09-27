@@ -71,6 +71,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TravelContext>(opt
 => opt.UseNpgsql(builder.Configuration.GetConnectionString("PgConnection")));
 
+builder.Services.AddScoped<IEmailService,EmailService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

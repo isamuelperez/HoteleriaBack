@@ -1,8 +1,9 @@
 ﻿using HoteleriaBack.Application.Rooms.Create;
+using HoteleriaBack.Application.Rooms.Get;
 using HoteleriaBack.Application.Rooms.GetAll;
 using HoteleriaBack.Application.Rooms.Update;
 using HoteleriaBack.Domain.Contracts;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers
@@ -18,7 +19,7 @@ namespace HoteleriaBack.Api.Controllers
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
         }
-        //[Authorize]
+        [Authorize]
         [HttpPost("create")]
         public ActionResult Create(CreateRequestRoom request)
         {
@@ -27,11 +28,22 @@ namespace HoteleriaBack.Api.Controllers
                 return Ok(response);
             return BadRequest(response);
         }
-        //[Authorize]
+        [Authorize]
         [HttpPut("update")]
         public ActionResult Update(UpdateRoomRequest request)
         {
             var response = new UpdateRoomCommand(_unitOfWork, _authenticationService).Handle(request);
+            if (response.Status == 200)
+                return Ok(response);
+            return BadRequest(response);
+        }
+
+
+        //[Authorize]
+        [HttpGet("{enabled}")]
+        public ActionResult GetRoomEnabled(bool enabled)
+        {
+            var response = new GetRoomQuery(_unitOfWork, _authenticationService, enabled).Handle();
             if (response.Status == 200)
                 return Ok(response);
             return BadRequest(response);

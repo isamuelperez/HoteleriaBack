@@ -1,13 +1,7 @@
-﻿using HoteleriaBack.Application.Rooms.GetAll;
-using HoteleriaBack.Application.Shared;
+﻿using HoteleriaBack.Application.Shared;
 using HoteleriaBack.Domain.Contracts;
 using HoteleriaBack.Domain.Entities;
 using HoteleriaBack.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HoteleriaBack.Application.Reservations.GetAll
 {
@@ -23,7 +17,7 @@ namespace HoteleriaBack.Application.Reservations.GetAll
 
         public Response<List<GetAllResponseReservation>> Handle()
         {
-            long userId = 1;//_authenticationService.GetIdUser();
+            long userId =_authenticationService.GetIdUser();
 
             if (userId <= 0) return new Response<List<GetAllResponseReservation>>("El usuario no esta utenticado.", 500);
 

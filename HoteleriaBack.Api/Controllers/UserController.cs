@@ -1,6 +1,5 @@
 ﻿using HoteleriaBack.Application.Login.Authentication;
 using HoteleriaBack.Domain.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers
@@ -18,6 +17,7 @@ namespace HoteleriaBack.Api.Controllers
             _jwtService = jwtService;
             _authenticationService = authenticationService;
         }
+
         [HttpPost("authentication")]
         public ActionResult Authentication(AuthenticationRequest request)
         {

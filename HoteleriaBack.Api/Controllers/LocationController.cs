@@ -1,8 +1,5 @@
-﻿using HoteleriaBack.Application.Hotels.Create;
-using HoteleriaBack.Application.Hotels.GetAll;
-using HoteleriaBack.Application.Locations.GetAll;
+﻿using HoteleriaBack.Application.Locations.GetAll;
 using HoteleriaBack.Domain.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HoteleriaBack.Api.Controllers

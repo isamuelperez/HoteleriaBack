@@ -27,7 +27,7 @@ namespace HoteleriaBack.Application.Rooms.Update
 
             if (request is null) return new Response<bool>("La solicitud no puede ser nula.", 400);
 
-            long userId = 1;// _authenticationService.GetIdUser();
+            long userId = _authenticationService.GetIdUser();
 
             if (userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
 

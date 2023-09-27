@@ -29,15 +29,14 @@ namespace HoteleriaBack.Application.Reservations.Create
 
             if (request is null) return new Response<bool>("La solicitud no puede ser nula.", 400);
 
-            long userId = 1;// _authenticationService.GetIdUser();
+            long userId = _authenticationService.GetIdUser();
 
-            if (userId <= 0) return new Response<bool>("El usuario no esta utenticado.", 500);
+            if (userId < 0) return new Response<bool>("El usuario no esta utenticado.", 500);
 
             var user = _unitOfWork.GenericRepository<User>().Find(userId);
 
             if (user is null) return new Response<bool>("No se pudo encontrar el usuario.", 500);
 
-            //if (user.Type != UserType.Agency) return new Response<bool>("El usuario no tiene permisos para crear un hotel.", 400);
 
             try
             {
@@ -51,9 +50,8 @@ namespace HoteleriaBack.Application.Reservations.Create
 
                 _unitOfWork.GenericRepository<Reservation>().Add(reservation);
 
-                //update enable room
                 var HotelSelect = _unitOfWork.GenericRepository<Hotel>().Find(request.UpdateRoomRequest.HotelId);
-                var dto = Map(request.UpdateRoomRequest,HotelSelect);
+                var dto = Map(request.UpdateRoomRequest, HotelSelect);
 
                 room.Update(dto);
 
